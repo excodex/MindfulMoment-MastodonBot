@@ -17,7 +17,7 @@ class Bot():
 	def uploadImage(self, url):
 		r = requests.get(url, allow_redirects=True)
 		open("image.png", "wb").write(r.content)
-		img = self.mastodon.media_post(url, "image/png")
+		img = self.mastodon.media_post("image.png", "image/png")
 		os.remove("image.png")
 		return img
 
