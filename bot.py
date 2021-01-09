@@ -1,4 +1,5 @@
 import os
+import io
 import requests
 from mastodon import Mastodon
 from dotenv import load_dotenv
@@ -16,9 +17,7 @@ class Bot():
 
 	def uploadImage(self, url):
 		r = requests.get(url, allow_redirects=True)
-		open("image.png", "wb").write(r.content)
-		img = self.mastodon.media_post("image.png", "image/png")
-		os.remove("image.png")
+		img = self.mastodon.media_post(io.BytesIO(r.content), "image/png")
 		return img
 
 	def toot(self):
